@@ -9,8 +9,10 @@ import Sky from './sky.js';
 var container;
 var camera, scene, renderer, light;
 var water, sphere;
+
 init();
 animate();
+
 function init() {
   container = document.body;
   //
@@ -97,15 +99,18 @@ function init() {
   scene.add( sphere );
   //
 }
+
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize( window.innerWidth, window.innerHeight );
 }
+
 function animate() {
   requestAnimationFrame( animate );
   render();
 }
+
 function render() {
   var time = performance.now() * 0.001;
   sphere.position.y = Math.sin( time ) * 20 + 5;
