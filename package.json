@@ -1,28 +1,22 @@
 {
-  "name": "webgl",
-  "version": "1.0.0",
-  "description": "learning webgl",
-  "main": "index.js",
-  "dependencies": {
-    "express": "*",
-    "three.js": "*"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukeforehand/webgl.git"
   },
-  "keywords": [
-    "webgl"
-  ],
-  "author": "Luke Forehand",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lukeforehand/webgl/issues"
+  "dependencies": {
+    "three.js": "*"
   },
-  "homepage": "https://github.com/lukeforehand/webgl"
+  "devDependencies": {
+    "webpack": "*",
+    "webpack-cli": "*",
+    "html-webpack-plugin": "*",
+    "file-loader": "*"
+  },
+  "scripts": {
+    "install": "webpack --mode=development",
+    "watch": "webpack --watch --mode=development",
+    "build": "webpack --mode=production --optimize-minimize"
+  },
+  "author": "Luke Forehand",
+  "license": "ISC"
 }
