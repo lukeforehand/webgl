@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Learning WebGL'
+      title: require('./package.json').description
     })
   ],
   module: {
@@ -12,8 +12,13 @@ module.exports = {
         use: [
           'file-loader'
         ]
+      },
+      {
+        test: /\.(c)$/,
+        use: [
+          'raw-loader'
+        ]
       }
     ]
   }
 }
-

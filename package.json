@@ -1,4 +1,5 @@
 {
+  "description": "Luke learning WebGL",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukeforehand/webgl.git"
@@ -10,7 +11,8 @@
     "webpack": "*",
     "webpack-cli": "*",
     "html-webpack-plugin": "*",
-    "file-loader": "*"
+    "file-loader": "*",
+    "raw-loader": "*"
   },
   "scripts": {
     "install": "webpack --mode=development",
