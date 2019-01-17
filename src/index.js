@@ -619,7 +619,6 @@ function init() {
   var material = new THREE.MeshStandardMaterial( {
     vertexColors: THREE.VertexColors,
     roughness: 0.0,
-    flatShading: true,
     envMap: cubeCamera.renderTarget.texture,
     side: THREE.DoubleSide
   } );
