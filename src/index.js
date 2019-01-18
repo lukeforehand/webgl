@@ -6,9 +6,13 @@ import waternormals from './waternormals.jpg';
 
 import Sky from './sky.js';
 
+import FlyControls from './controls.js';
+
 var container;
-var camera, scene, renderer, light;
+var camera, scene, renderer, controls, light;
 var water, sphere;
+
+var clock = new THREE.Clock();
 
 init();
 animate();
@@ -25,6 +29,14 @@ function init() {
   //
   camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 1, 20000 );
   camera.position.set( 30, 30, 100 );
+
+  controls = new FlyControls( camera );
+  controls.movementSpeed = 1000;
+  controls.domElement = renderer.domElement;
+  controls.rollSpeed = Math.PI / 24;
+  controls.autoForward = false;
+  controls.dragToLook = false;
+
   //
   light = new THREE.DirectionalLight( 0xffffff, 0.8 );
   scene.add( light );
@@ -117,5 +129,8 @@ function render() {
   sphere.rotation.x = time * 0.5;
   sphere.rotation.z = time * 0.51;
   water.material.uniforms.time.value += 1.0 / 60.0;
+
+  controls.update( clock.getDelta() );
+
   renderer.render( scene, camera );
 }
