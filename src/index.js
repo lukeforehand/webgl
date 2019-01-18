@@ -8,7 +8,6 @@ import Sky from './sky.js';
 
 import Controls from './controls.js';
 
-var container;
 var camera, scene, renderer, controls, light;
 var water;
 
@@ -44,7 +43,6 @@ function init() {
 
   // Light
   light = new THREE.DirectionalLight( 0xffffff, 0.8 );
-  scene.add( light );
 
   // Water
   var waterGeometry = new THREE.PlaneBufferGeometry( 10000, 10000 );
