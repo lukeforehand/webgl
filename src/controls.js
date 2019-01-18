@@ -4,7 +4,7 @@
 
 import THREE from 'three';
 
-export default function FlyControls ( object, domElement ) {
+export default function Controls ( object, domElement ) {
 
 	this.object = object;
 
