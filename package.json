@@ -21,7 +21,7 @@
   "scripts": {
     "install": "webpack --mode=development",
     "watch": "webpack --watch --mode=development",
-    "build": "webpack --mode=production --optimize-minimize"
+    "build": "rm -Rf dist && webpack --mode=production --optimize-minimize"
   },
   "author": "Luke Forehand",
   "license": "ISC"
