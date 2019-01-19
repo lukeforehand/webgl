@@ -1,16 +1,20 @@
 {
+  "name": "luke-webgl",
   "description": "Luke learning WebGL",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukeforehand/webgl.git"
   },
+  "private": true,
   "dependencies": {
-    "three.js": "*"
+    "three.js": "*",
+    "glslify": "*"
   },
   "devDependencies": {
     "webpack": "*",
     "webpack-cli": "*",
     "html-webpack-plugin": "*",
+    "favicons-webpack-plugin": "*",
     "file-loader": "*",
     "raw-loader": "*"
   },
