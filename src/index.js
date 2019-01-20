@@ -16,6 +16,8 @@ var controls;
 var sphere;
 var uniforms;
 
+var clock = new THREE.Clock();
+
 init();
 animate();
 
@@ -31,8 +33,8 @@ function init() {
   scene = new THREE.Scene();
 
   // Camera
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.set(0, 0, 100);
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
+  camera.position.set(0, 0, 1000);
 
   // Controls
   controls = new OrbitControls(camera, renderer.domElement);
@@ -44,10 +46,9 @@ function init() {
   controls.maxPolarAngle = Math.PI;
 
   // sphere
-  var geometry = new THREE.SphereBufferGeometry(50, 32, 32);
+  var geometry = new THREE.SphereBufferGeometry(250, 32, 32);
   uniforms = {
-    amplitude: { value: 10.0 },
-    color: { value: new THREE.Color(0xff2200) },
+    time: { value: clock.getDelta() },
     texture: { value: new THREE.TextureLoader().load(lukepixels) }
   };
   uniforms.texture.value.wrapS = uniforms.texture.value.wrapT = THREE.RepeatWrapping;
@@ -76,9 +77,6 @@ function animate() {
 }
 
 function render() {
-
-  uniforms.amplitude.value = 2.5 * Math.sin( sphere.rotation.y * 0.125 );
-  uniforms.color.value.offsetHSL( 0.0005, 0, 0 );
-
+  uniforms.time.value += clock.getDelta();
   renderer.render(scene, camera);
 }
