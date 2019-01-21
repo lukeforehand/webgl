@@ -7,15 +7,14 @@ import fragmentShader from './shaders/luke.frag';
 import vertexShader from './shaders/luke.vert';
 
 import lukepixels from './luke_pixels.jpg';
+import galaxypixels from './galaxy.jpg';
 
 var renderer;
 var scene;
 var camera;
 var controls;
-
-var sphere;
-var uniforms;
-
+var backgroundUniforms;
+var uniformsArray;
 var clock = new THREE.Clock();
 
 init();
@@ -33,8 +32,7 @@ function init() {
   scene = new THREE.Scene();
 
   // Camera
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
-  camera.position.set(0, 0, 1000);
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 4000);
 
   // Controls
   controls = new OrbitControls(camera, renderer.domElement);
@@ -46,19 +44,52 @@ function init() {
   controls.maxPolarAngle = Math.PI;
 
   // sphere
-  var geometry = new THREE.SphereBufferGeometry(250, 32, 32);
-  uniforms = {
-    time: { value: clock.getDelta() },
-    texture: { value: new THREE.TextureLoader().load(lukepixels) }
+  var geometry = new THREE.SphereBufferGeometry(2000, 20, 10);
+  backgroundUniforms = {
+    time: { value: 0.0 },
+    speed: { value: 0.25 },
+    scale: { value: 4.0 },
+    texture: { value: new THREE.TextureLoader().load(galaxypixels) }
   };
-  uniforms.texture.value.wrapS = uniforms.texture.value.wrapT = THREE.RepeatWrapping;
+  backgroundUniforms.texture.value.wrapS = backgroundUniforms.texture.value.wrapT = THREE.RepeatWrapping;
   var material = new THREE.ShaderMaterial({
-    uniforms,
+    uniforms: backgroundUniforms,
     fragmentShader: fragmentShader,
-    vertexShader: vertexShader
+    vertexShader: vertexShader,
+    side: THREE.BackSide
   });
-  sphere = new THREE.Mesh(geometry, material);
+  var sphere = new THREE.Mesh(geometry, material);
   scene.add(sphere);
+
+  uniformsArray = [];
+  for (var i = 0; i < 100; i++) {
+    geometry = new THREE.SphereBufferGeometry(50, 20, 10);
+    var uniforms = {
+      time: { value: 0.0 },
+      speed: { value: Math.floor(Math.random() * 100) + 10 },
+      scale: { value: 2.0 },
+      texture: { value: new THREE.TextureLoader().load(lukepixels) }
+    };
+    uniforms.texture.value.wrapS = uniforms.texture.value.wrapT = THREE.RepeatWrapping;
+    material = new THREE.ShaderMaterial({
+      uniforms: uniforms,
+      fragmentShader: fragmentShader,
+      vertexShader: vertexShader
+    });
+    uniformsArray.push(uniforms);
+    sphere = new THREE.Mesh(geometry, material);
+    var max = 1000;
+    var min = -1000;
+    sphere.position.set(
+      Math.floor(Math.random() * (max - min + 1)) + min,
+      Math.floor(Math.random() * (max - min + 1)) + min,
+      Math.floor(Math.random() * (max - min + 1)) + min);
+    sphere.rotation.set(
+      Math.floor(Math.random() * 360) + 1,
+      Math.floor(Math.random() * 360) + 1,
+      Math.floor(Math.random() * 360) + 1);
+    scene.add(sphere);
+  }
 
   window.addEventListener( 'resize', onWindowResize, false );
 
@@ -77,6 +108,10 @@ function animate() {
 }
 
 function render() {
-  uniforms.time.value += clock.getDelta();
+  var delta = clock.getDelta();
+  backgroundUniforms.time.value += delta;
+  for (var i in uniformsArray) {
+    uniformsArray[i].time.value += delta;
+  }
   renderer.render(scene, camera);
 }

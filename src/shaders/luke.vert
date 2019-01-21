@@ -17,13 +17,15 @@
 // uniform mat4 projectionMatrix; // transformation matrix from camera space to screen coords
 
 uniform float time;
+uniform float scale;
+uniform float speed;
 
 varying vec3 vNormal;
 varying vec2 vUv;
 
 void main() {
 
-  float angle = radians(mod(time, 90.0));
+  float angle = radians(time * speed);
   float c = cos(angle);
   float s = sin(angle);
   mat4 ry = mat4(c,   0.0, -s,  0.0,
@@ -31,6 +33,6 @@ void main() {
                  s,   0.0, c,   0.0,
                  0.0, 0.0, 0.0, 1.0);
   vNormal = normal;
-  vUv = uv + vec2(0.22, 0.28); // shift texture
+  vUv = uv * vec2(scale, scale); // scale texture
   gl_Position = projectionMatrix * modelViewMatrix * ry * vec4(position, 1.0);
 }

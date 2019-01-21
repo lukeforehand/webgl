@@ -20,7 +20,7 @@
   },
   "scripts": {
     "install": "webpack --mode=development",
-    "watch": "webpack --watch --mode=development",
+    "watch": "webpack --watch --mode=development & (cd dist && python -m SimpleHTTPServer 8000)",
     "build": "rm -Rf dist && webpack --mode=production --optimize-minimize"
   },
   "author": "Luke Forehand",
