@@ -9,6 +9,8 @@ import vertexShader from './shaders/luke.vert';
 import lukepixels from './luke_pixels.jpg';
 import galaxypixels from './galaxy.jpg';
 
+import music from './east_beat.m4a';
+
 var renderer;
 var scene;
 var camera;
@@ -17,15 +19,33 @@ var backgroundUniforms;
 var uniformsArray;
 var clock = new THREE.Clock();
 
+var soundFile;
+
 init();
 animate();
 
 function init() {
 
+  // Music
+  soundFile = document.createElement("audio");
+  document.body.appendChild(soundFile);
+  soundFile.preload = "auto";
+  var src = document.createElement("source");
+  src.src = music;
+  soundFile.appendChild(src);
+  soundFile.volume = 1.000000;
+  soundFile.load();
+
   // Renderer
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // Music starts when scene is clicked
+  renderer.domElement.addEventListener("click", function() {
+    soundFile.play();
+  });
+
   document.body.appendChild(renderer.domElement);
 
   // Scene
