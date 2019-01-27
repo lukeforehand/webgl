@@ -6,6 +6,9 @@ import OrbitControls from './orbit_controls.js';
 import fragmentShader from './shaders/luke.frag';
 import vertexShader from './shaders/luke.vert';
 
+import snowVertShader from './shaders/snow.vert';
+import snowFragShader from './shaders/snow.frag';
+
 import lukepixels from './luke_pixels.jpg';
 import galaxypixels from './galaxy.jpg';
 
@@ -65,25 +68,22 @@ function init() {
   controls.screenSpacePanning = false;
   controls.minDistance = 100;
   controls.maxDistance = 500;
-  controls.maxPolarAngle = Math.PI;
+  //controls.minPolarAngle = Math.PI / 2;
+  //controls.maxPolarAngle = Math.PI / 2;
 
-  // sphere
-  var geometry = new THREE.SphereBufferGeometry(2000, 20, 10);
+  // background
+  var geometry = new THREE.SphereGeometry(1000, 32, 32);
   backgroundUniforms = {
     time: { value: 0.0 },
-    speed: { value: 0.25 },
-    scale: { value: 4.0 },
-    texture: { value: new THREE.TextureLoader().load(galaxypixels) }
+    resolution: { value: [window.innerWidth, window.innerHeight]}
   };
-  backgroundUniforms.texture.value.wrapS = backgroundUniforms.texture.value.wrapT = THREE.RepeatWrapping;
   var material = new THREE.ShaderMaterial({
     uniforms: backgroundUniforms,
-    fragmentShader: fragmentShader,
-    vertexShader: vertexShader,
+    fragmentShader: snowFragShader,
+    vertexShader: snowVertShader,
     side: THREE.BackSide
   });
-  var sphere = new THREE.Mesh(geometry, material);
-  scene.add(sphere);
+  scene.add(new THREE.Mesh(geometry, material));
 
   uniformsArray = [];
   for (var i = 0; i < 100; i++) {
@@ -101,7 +101,7 @@ function init() {
       vertexShader: vertexShader
     });
     uniformsArray.push(uniforms);
-    sphere = new THREE.Mesh(geometry, material);
+    var sphere = new THREE.Mesh(geometry, material);
     var max = 1000;
     var min = -1000;
     sphere.position.set(
