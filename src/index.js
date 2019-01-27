@@ -41,8 +41,11 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  // Music starts when scene is clicked
+  // Music starts with scene interaction
   renderer.domElement.addEventListener("click", function() {
+    soundFile.play();
+  });
+    renderer.domElement.addEventListener("touch", function() {
     soundFile.play();
   });
 
