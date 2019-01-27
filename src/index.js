@@ -46,7 +46,7 @@ function init() {
   renderer.domElement.addEventListener("click", function() {
     soundFile.play();
   });
-    renderer.domElement.addEventListener("touchmove", function() {
+    renderer.domElement.addEventListener("touchend", function() {
     soundFile.play();
   });
 
