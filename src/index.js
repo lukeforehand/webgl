@@ -30,6 +30,7 @@ function init() {
   soundFile = document.createElement("audio");
   document.body.appendChild(soundFile);
   soundFile.preload = "auto";
+  soundFile.setAttribute("controls", "");
   var src = document.createElement("source");
   src.src = music;
   soundFile.appendChild(src);
@@ -45,7 +46,7 @@ function init() {
   renderer.domElement.addEventListener("click", function() {
     soundFile.play();
   });
-    renderer.domElement.addEventListener("touch", function() {
+    renderer.domElement.addEventListener("touchmove", function() {
     soundFile.play();
   });
 
