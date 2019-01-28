@@ -20,7 +20,6 @@ uniform float time;
 uniform float scale;
 uniform float speed;
 
-varying vec3 vNormal;
 varying vec2 vUv;
 
 void main() {
@@ -32,7 +31,6 @@ void main() {
                  0.0, 1.0, 0.0, 0.0,
                  s,   0.0, c,   0.0,
                  0.0, 0.0, 0.0, 1.0);
-  vNormal = normal;
   vUv = uv * vec2(scale, scale); // scale texture
   gl_Position = projectionMatrix * modelViewMatrix * ry * vec4(position, 1.0);
 }

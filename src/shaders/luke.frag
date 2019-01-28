@@ -12,7 +12,6 @@
 // mediump vec4 gl_FragColor; // Holds the output fragment color value of the shader
 // mediump vec4 gl_FragData[n]; // Holds the fragment color for color attachment n.
 
-varying vec3 vNormal;
 varying vec2 vUv;
 
 uniform sampler2D texture;

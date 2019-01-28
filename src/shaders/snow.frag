@@ -1,7 +1,7 @@
+varying vec2 vUv;
+
 uniform float time;
 uniform vec2 resolution;
-
-varying vec2 vUv;
 
 float snow(vec2 uv, float scale) {
   float w = smoothstep(9., 0., -uv.y * (scale / 10.));
@@ -19,8 +19,8 @@ float snow(vec2 uv, float scale) {
 }
 
 void main(void) {
-  vec2 uv = (gl_FragCoord.xy * 2. - resolution.xy) / min(resolution.x, resolution.y);
-  //vec2 uv = vUv;
+  //vec2 uv = (gl_FragCoord.xy * 2. - resolution.xy) / min(resolution.x, resolution.y);
+  vec2 uv = vUv;
   float c = snow(uv, 30.) * .3;
   c += snow(uv, 20.) * .5;
   c += snow(uv, 15.) * .8;

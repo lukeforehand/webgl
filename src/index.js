@@ -6,11 +6,10 @@ import FlyControls from './fly_controls.js';
 import fragmentShader from './shaders/luke.frag';
 import vertexShader from './shaders/luke.vert';
 
-import snowVertShader from './shaders/snow.vert';
-import snowFragShader from './shaders/snow.frag';
+import starsVertShader from './shaders/stars.vert';
+import starsFragShader from './shaders/stars.frag';
 
 import lukepixels from './luke_pixels.jpg';
-import galaxypixels from './galaxy.jpg';
 
 import music from './east_beat.m4a';
 
@@ -71,15 +70,15 @@ function init() {
   controls.dragToLook = true;
 
   // background
-  var geometry = new THREE.SphereGeometry(1000, 32, 32);
+  var geometry = new THREE.SphereBufferGeometry(1000, 20, 10);
   backgroundUniforms = {
     time: { value: 0.0 },
     resolution: { value: [window.innerWidth, window.innerHeight]}
   };
   var material = new THREE.ShaderMaterial({
     uniforms: backgroundUniforms,
-    fragmentShader: snowFragShader,
-    vertexShader: snowVertShader,
+    fragmentShader: starsFragShader,
+    vertexShader: starsVertShader,
     side: THREE.BackSide
   });
   scene.add(new THREE.Mesh(geometry, material));
