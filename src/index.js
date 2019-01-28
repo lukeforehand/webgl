@@ -1,7 +1,7 @@
 
 import THREE from 'three';
 
-import OrbitControls from './orbit_controls.js';
+import FlyControls from './fly_controls.js';
 
 import fragmentShader from './shaders/luke.frag';
 import vertexShader from './shaders/luke.vert';
@@ -29,6 +29,12 @@ animate();
 
 function init() {
 
+  // Renderer
+  renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+/*
   // Music
   soundFile = document.createElement("audio");
   document.body.appendChild(soundFile);
@@ -40,11 +46,6 @@ function init() {
   soundFile.volume = 1.000000;
   soundFile.load();
 
-  // Renderer
-  renderer = new THREE.WebGLRenderer();
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
   // Music starts with scene interaction
   renderer.domElement.addEventListener("click", function() {
     soundFile.play();
@@ -52,7 +53,7 @@ function init() {
     renderer.domElement.addEventListener("touchend", function() {
     soundFile.play();
   });
-
+*/
   document.body.appendChild(renderer.domElement);
 
   // Scene
@@ -62,14 +63,12 @@ function init() {
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 4000);
 
   // Controls
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-  controls.dampingFactor = 0.25;
-  controls.screenSpacePanning = false;
-  controls.minDistance = 100;
-  controls.maxDistance = 500;
-  //controls.minPolarAngle = Math.PI / 2;
-  //controls.maxPolarAngle = Math.PI / 2;
+  controls = new FlyControls(camera);
+  controls.movementSpeed = 100;
+  controls.domElement = renderer.domElement;
+  controls.rollSpeed = Math.PI / 12;
+  controls.autoForward = false;
+  controls.dragToLook = true;
 
   // background
   var geometry = new THREE.SphereGeometry(1000, 32, 32);
@@ -127,7 +126,6 @@ function onWindowResize() {
 
 function animate() {
   requestAnimationFrame(animate);
-  controls.update();
   render();
 }
 
@@ -137,5 +135,6 @@ function render() {
   for (var i in uniformsArray) {
     uniformsArray[i].time.value += delta;
   }
+  controls.update(delta);
   renderer.render(scene, camera);
 }

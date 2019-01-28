@@ -39,7 +39,7 @@ export default function Controls ( object, domElement ) {
 
 		}
 
-		//event.preventDefault();
+		event.preventDefault();
 
 		switch ( event.keyCode ) {
 
@@ -109,7 +109,9 @@ export default function Controls ( object, domElement ) {
 
 		}
 
-		event.preventDefault();
+		if (event.type != 'touchstart') {
+			event.preventDefault();
+		}
 		event.stopPropagation();
 
 		if ( this.dragToLook ) {
@@ -150,7 +152,9 @@ export default function Controls ( object, domElement ) {
 
 	this.mouseup = function ( event ) {
 
-		event.preventDefault();
+		if (event.type != 'touchend') {
+			event.preventDefault();
+		}
 		event.stopPropagation();
 
 		if ( this.dragToLook ) {
@@ -258,6 +262,9 @@ export default function Controls ( object, domElement ) {
 		this.domElement.removeEventListener( 'mousedown', _mousedown, false );
 		this.domElement.removeEventListener( 'mousemove', _mousemove, false );
 		this.domElement.removeEventListener( 'mouseup', _mouseup, false );
+		this.domElement.removeEventListener( 'touchdown', _mousedown, false );
+//		this.domElement.removeEventListener( 'touchmove', _mousemove, false );
+		this.domElement.removeEventListener( 'touchup', _mouseup, false );
 
 		window.removeEventListener( 'keydown', _keydown, false );
 		window.removeEventListener( 'keyup', _keyup, false );
@@ -275,6 +282,10 @@ export default function Controls ( object, domElement ) {
 	this.domElement.addEventListener( 'mousemove', _mousemove, false );
 	this.domElement.addEventListener( 'mousedown', _mousedown, false );
 	this.domElement.addEventListener( 'mouseup', _mouseup, false );
+
+	//this.domElement.addEventListener( 'touchmove', _mousemove, false );
+	this.domElement.addEventListener( 'touchstart', _mousedown, false );
+	this.domElement.addEventListener( 'touchend', _mouseup, false );
 
 	window.addEventListener( 'keydown', _keydown, false );
 	window.addEventListener( 'keyup', _keyup, false );
